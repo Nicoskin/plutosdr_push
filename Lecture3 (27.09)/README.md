@@ -15,7 +15,7 @@
         
  
 # Выполнение
-<img src="./WifiAnalyzer.png" height="500" />  
+<img src="./photo/WifiAnalyzer.png" height="500" />  
 С помощью приложения  WifiAnalyzer определил что больше всего загружен 11 канал на чистоте 2.4GHz   
 
 Сеть которая имела максимальный сигнал в этом канале *Galaxy A514EEE*     
@@ -28,8 +28,8 @@ sdr.rx_lo = 2462000000
 
 Получилось поймать сигнал:  
 
-<img src="./11канал.png" height="500" /> 
+<img src="./photo/11channel.png" height="500" /> 
 
 Сигнал обычного шума на 2GHz:  
 
-<img src="./2GHz.png" height="500" /> 
+<img src="./photo/2GHz.png" height="500" /> 

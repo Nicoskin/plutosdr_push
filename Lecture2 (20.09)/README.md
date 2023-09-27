@@ -26,12 +26,12 @@
 ### №1
 посчитал время сортировки случайного массива для **Python Lists** и **NumPy**  
 от 10 до 5000000, с шагом 200000(для уменьшения времени ожидания расчётов)
-<img src="./срав_алг.png" width="500" />
+<img src="./photo/comparison_alg.png" width="500" />
 
 
 ### №2
 
-<img src="./3_графика.png" width="800" />
+<img src="./photo/3_graphics.png" width="800" />
   
 
 ### №3
