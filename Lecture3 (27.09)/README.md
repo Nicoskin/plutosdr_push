@@ -28,7 +28,8 @@ sdr.rx_lo = 2462000000
 
 Получилось поймать сигнал:  
 
-<img src="./photo/11channel.png" height="500" /> 
+<img src="./photo/11channel.png" height="400" /> 
+<img src="./photo/11channel2.png" height="400" />
 
 Сигнал обычного шума на 2GHz:  
 
