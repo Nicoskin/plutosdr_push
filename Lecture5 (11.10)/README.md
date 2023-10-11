@@ -79,19 +79,19 @@
 ### Задание №1
 
 **1**
-```cpp
+```py
 frequency = 2400e6+(2e6*2)
 sdr.rx_lo = int(frequency)
 sdr.tx_lo = int(frequency)
 ```
 
 **2**
-```cpp
+```py
 sdr.sample_rate = 1e6
 ```
 
 **4**
-```cpp
+```py
 fc = 10000
 ts = 1/float(1e6)
 t = np.arange(0, fc*ts, ts)
@@ -101,7 +101,7 @@ samples = i + 1j*q
 ```
 
 **5**
-```cpp
+```py
 sdr.tx_cyclic_buffer = True # Enable cyclic buffers
 sdr.tx(samples)
 ```
