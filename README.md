@@ -12,6 +12,9 @@
 + [6. Изучение основных параметров библиотеки PyAdi для Adalm Pluto SDR](https://humble-ballcap-e09.notion.site/6-PyAdi-Adalm-Pluto-SDR-7dabe605bb7243e3b8cb02ff208ca2bf)   
 + [7. Вычисление ДПФ, свойства ДПФ. Амплитудная модуляция](https://humble-ballcap-e09.notion.site/7-0ee2669e5e8144f39ed11d8455609fc2)
 + [8. Изучение основных свойств ДПФ с помощью моделирования в  Python/Spyder](https://humble-ballcap-e09.notion.site/8-Python-Spyder-c8f1d4266bd0468caadda311c2e6f812)
++ [9. Амплитудная модуляция](https://humble-ballcap-e09.notion.site/9-e47a36000b3944be8c93d32561685ae1)
++ [10. Изучение свойств АМ-сигналов с помощью моделирования в Python/Spyder](https://humble-ballcap-e09.notion.site/10-Python-Spyder-6db5b4e2bbc74e098af7297b98508b63)
++ [11. Передача/прием sin() сигнала. Реализация АМ модуляции. PlutoSDR](https://humble-ballcap-e09.notion.site/11-sin-PlutoSDR-33d96c13fe9142c3bdceb2ede48f7a50)
 #
 
 ### Практики
@@ -19,6 +22,8 @@
 - [x] [Практика 2](./Lecture2%20(20.09))  
 - [x] [Практика 3](./Lecture3%20(27.09)) 
 - [x] [Практика 4](./Lecture4%20(4.10))
+- [x] [Практика 5](./Lecture5%20(11.10))
+- [x] [Практика 6](./Lecture6%20(18.10))
 
 
 
