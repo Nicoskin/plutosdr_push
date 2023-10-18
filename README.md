@@ -23,9 +23,10 @@
 - [x] [Практика 3](./Lecture3%20(27.09)) 
 - [x] [Практика 4](./Lecture4%20(4.10))
 - [x] [Практика 5](./Lecture5%20(11.10))
-- [x] [Практика 6](./Lecture6%20(18.10))
+- [ ] [Практика 6](./Lecture6%20(18.10))
 
 
 
 [//]: <> (https://img.shields.io/badge/In%20progress-grey.svg)
 [//]: <> (https://img.shields.io/badge/Done-green.svg)
+
