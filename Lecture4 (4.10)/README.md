@@ -37,7 +37,7 @@
 *k=16*
 
 ### №5
-```
+```py
 x=np.cos(2*np.pi*fc*t)+np.cos(2*np.pi*20*t)
 ```
 <img src="./photo/10Hz+20Hz.png" width="500" />
@@ -73,7 +73,7 @@ x=np.cos(2*np.pi*fc*t)+np.cos(2*np.pi*20*t)
 
 ### № Доп задание
 Дописал к коду недельной давности:
-```
+```py
 N=1024 # количество точек ДПФ
 X = fft(rx,N)/N
 plt.figure("FFT")
