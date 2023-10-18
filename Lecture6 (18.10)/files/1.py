@@ -16,7 +16,7 @@ def sdr_settings(ip:str, frequency: int, buffer_size: int, sample_rate: int): # 
 
     return sdr
 
-def create_bit_str(fio: str): # Функция преобразования строки в битовую последовательность | Возвращает bit_array
+def create_bit_str(fio: str): # Функция преобразования строку в битовую последовательность | Возвращает bit_array
     #fio = 'pushnitsa'
     encoded_bytes = fio.encode('ascii')
     # Преобразование байтов в массив битов
@@ -90,7 +90,7 @@ def rx_sig(samples, tx_cycle: bool, start_tx: int): # Функция перед�
     sdr.tx_cyclic_buffer = tx_cycle
     rx = []
     for i in range(1000): # Считывает секунду Rx
-        if (i==start_tx): # На start_tx * 1000 сэмпле начать Tx
+        if (i==start_tx): # На start_tx * 1000 семпле начать Tx
             sdr.tx(samples)
 
         new_data = sdr.rx()
