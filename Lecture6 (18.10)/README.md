@@ -1,4 +1,4 @@
-# Задание на практику ![](https://img.shields.io/badge/In%20progress-grey.svg)
+# Задание на практику ![](https://img.shields.io/badge/Done-green.svg)
 
 # Задания
 
