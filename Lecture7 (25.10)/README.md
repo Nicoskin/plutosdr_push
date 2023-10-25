@@ -107,7 +107,7 @@ for r in range(30):
 
 
 ### №2_1
-Спектр QPSK-модулированного сигнала
+Спектр QPSK-модулированного сигнала     
 <img src="./photo/QPSK_fft.png" width="600" />  
 <img src="./photo/QPSK_fft_2.png" width="600" />        
 
@@ -123,5 +123,5 @@ scatter plot одного символа
 Передал сигнал на другой Adalm Pluto SDR(сриншотов нет)
 
 ### Задача повышенной сложности
-выполнена в коде
+выполнена в коде        
 <img src="./photo/Dop.png" width="800" />
