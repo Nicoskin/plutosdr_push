@@ -3,21 +3,21 @@ import matplotlib.pyplot as plt
 import adi
 import time
 
-
-def sdr_settings(ip:str, frequency: int, buffer_size: int, sample_rate: int): # Настройка sdr
+def sdr_settings(ip:str, frequency: int, buffer_size: int, sample_rate: int, tx_gain: int, rx_gain: int): # Настройка sdr
     sdr = adi.Pluto(ip)
 
-    #frequency = 2300e6+(2e6*2)
     sdr.rx_lo = int(frequency)
     sdr.tx_lo = int(frequency)
 
     sdr.rx_buffer_size = buffer_size
     sdr.sample_rate = sample_rate
+    sdr.gain_control_mode_chan0 = 'manual'
+    sdr.tx_hardwaregain_chan0 = tx_gain # рекомендуемое значение от 0 до -50
+    sdr.rx_hardwaregain_chan0 = rx_gain # рекомендуемое значение от 0 до -50
 
     return sdr
 
 def create_bit_str(fio: str): # Функция преобразования строку в битовую последовательность | Возвращает bit_array
-    #fio = 'pushnitsa'
     encoded_bytes = fio.encode('ascii')
     # Преобразование байтов в массив битов
     bit_array = []
@@ -69,7 +69,7 @@ def decoding_tx(rx, threshold: int, start_duration: int, stop_duratio: int): # �
         if rx[i] > threshold:
             consecutive_count += 1
 
-            if (consecutive_count == 1600):
+            if (consecutive_count == start_duration):
                 start = 1
                 print('Start=',start, '  i =',i) # debug
 
@@ -77,7 +77,7 @@ def decoding_tx(rx, threshold: int, start_duration: int, stop_duratio: int): # �
                 output.append(1)
                 consecutive_count = 0
 
-            if ((consecutive_count == 900) and (start==1)):
+            if ((consecutive_count == stop_duratio) and (start==1)):
                 start = 0
                 print('Start =',start, '  i =',i) # debug
 
@@ -106,14 +106,66 @@ def out_main_graph(rx): # Функция выводит rx
     plt.xlim(202800, 203500+len(samples)) # вывод начиная с самого сигнала
     plt.plot(rx)
 
+def decoding_tx_debug(rx, threshold: int, start_duration: int, stop_duration: int): #Debug
+    output = []
+    start = 0
+    consecutive_count = 0
+    count_zero = 0
+    x_values = []  # Добавлено для хранения значений x для графика
+    colors = []    # Добавлено для хранения цветов для графика
+
+    for i in range(len(rx)):
+        if rx[i] > threshold:
+            consecutive_count += 1
+
+            if consecutive_count == start_duration:
+                start = 1
+                print('Start=', start, '  i =', i)  # debug
+                consecutive_count = 0
+
+            if (consecutive_count % 95 == 0) and (start == 1):
+                output.append(1)
+                x_values.append(i)
+                colors.append('green')
+                #consecutive_count = 0
+
+            if (consecutive_count == stop_duration) and (start == 1):
+                start = 0
+                x_values = x_values[:-10]
+                colors = colors[:-10]
+                output = output[:-10]
+                print('Start=', start, '  i =', i)  # debug
+
+        elif (rx[i] < threshold):
+            count_zero += 1
+            if (count_zero % 80 == 0) and (start == 1):
+                output.append(0)
+                x_values.append(i)
+                colors.append('red')
+            if consecutive_count != 0:
+                count_zero = 0
+            consecutive_count = 0
+        else:
+            consecutive_count = 0
+            count_zero = 0
+    
+
+    # Рисование графика
+    plt.plot(rx)
+    for x, color in zip(x_values, colors):
+        plt.axvline(x=x, color=color, linestyle='--', linewidth=2)
+
+    plt.show()
+    return output
 
 
-sdr = sdr_settings("ip:192.168.2.1", 2300e6+(2e6*2), 1000, 1e6)
+sdr = sdr_settings("ip:192.168.2.1", 2300e6+(2e6*2), 1000, 1e6,0,0)
 
 bit_array = create_bit_str('raf')
 
 samples = samples_from_bits(bit_array, 100, 2**14, 2**1) 
 
+# output1 = decoding_tx(samples, 7500, 1600, 1000)
 # plt.plot(samples) # debug
 # plt.show()
 
