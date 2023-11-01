@@ -149,6 +149,8 @@ def decoding_tx_debug(rx, threshold: int, start_duration: int, stop_duration: in
             consecutive_count = 0
             count_zero = 0
     
+    delit = remove_ones_from_start(output)
+    output = output[i:]  # Удаление единиц в начале
 
     # Рисование графика
     plt.plot(rx)
@@ -158,18 +160,24 @@ def decoding_tx_debug(rx, threshold: int, start_duration: int, stop_duration: in
     plt.show()
     return output
 
+def remove_ones_from_start(output):
+    i = 0
+    while i < len(output) and output[i] == 1:
+        i += 1
+    return i
 
-sdr = sdr_settings("ip:192.168.2.1", 2300e6+(2e6*2), 1000, 1e6,0,0)
+#sdr = sdr_settings("ip:192.168.2.1", 2300e6+(2e6*2), 1000, 1e6,0,0)
 
 bit_array = create_bit_str('raf')
 
 samples = samples_from_bits(bit_array, 100, 2**14, 2**1) 
 
-# output1 = decoding_tx(samples, 7500, 1600, 1000)
+output1 = decoding_tx_debug(samples, 7500, 1600, 1000)
 # plt.plot(samples) # debug
 # plt.show()
+print(output1)
 
-rx = rx_sig(samples, False, 200)
+#rx = rx_sig(samples, False, 200)
 
 output = decoding_tx(rx, 1500, 1600, 900)
 
