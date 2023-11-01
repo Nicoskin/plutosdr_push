@@ -17,7 +17,7 @@ def sdr_settings(ip:str, frequency: int, buffer_size: int, sample_rate: int, tx_
 
     return sdr
 
-def create_bit_str(fio: str): # Функция преобразования строку в битовую последовательность | Возвращает bit_array
+def create_bit_str(fio: str,start_bit:int, stop_bit:int): # Функция преобразования строку в битовую последовательность | Возвращает bit_array
     encoded_bytes = fio.encode('ascii')
     # Преобразование байтов в массив битов
     bit_array = []
@@ -25,28 +25,12 @@ def create_bit_str(fio: str): # Функция преобразования ст
         bits = bin(byte)[2:].zfill(8)  # Преобразование в биты
         bit_array.extend([int(bit) for bit in bits])
 
-    bit_start = np.ones(10) # 20 бит, тк в начале не всё передаётся
-    bit_stop = np.ones(5)
+    bit_start = np.ones(start_bit) 
+    bit_stop = np.ones(stop_bit)
     
-    # debug
-    #print('len(bit_array) =',len(bit_array)))
-
-    # for i in range(len(bit_array)):
-    #     print(int(bit_array[i]), end=' ')
-    #     if (i + 1) % 8 == 0:
-    #         print()
-
     bit_array_list = list(bit_array)
-    bit_array_list = list(bit_start) + bit_array_list + list(bit_stop) # Добавление стартовых 16 бит и конечных 10
+    bit_array_list = list(bit_start) + bit_array_list + list(bit_stop) 
     bit_array = np.array(bit_array_list)
-
-    # debug
-    #print('len(start+bit_array+stop) =', len(bit_array))
-
-    # for i in range(len(bit_array)):
-    #     print(int(bit_array[i]), end=' ')
-    #     if (i + 1) % 8 == 0:
-    #         print()
 
     return bit_array
 
@@ -99,26 +83,11 @@ def decoding_tx(rx, threshold: int, start_duration: int, stop_duration: int): # 
     
     return output
 
-def rx_sig(samples, tx_cycle: bool): # Функция передает samples начиная с ±(start_tx * 1000 + 3000) семпла | Возвращает массив rx
+def rx_sig(samples, tx_cycle: bool): # Функция передает samples
     sdr.tx_cyclic_buffer = tx_cycle
     sdr.tx(samples)
-    #time.sleep(0.0001)
-    # rx = []
-    # for i in range(1000): # Считывает секунду Rx
-    #     new_data = sdr.rx()
-    #     rx.extend(abs(new_data))
 
-    # return rx
-
-def out_main_graph(rx): # Функция выводит rx
-    plt.figure(1, figsize=[10,8])
-    plt.title("Сигнал")
-    plt.xlabel("samples") 
-    plt.ylabel("amplitude")
-    plt.xlim(202800, 203500+len(samples)) # вывод начиная с самого сигнала
-    plt.plot(rx)
-
-def decoding_tx_debug(rx, threshold: int, start_duration: int, stop_duration: int, bit_adjustment: int): #Debug
+def decoding_tx_debug(rx, threshold: int, start_duration: int, stop_duration: int, symbol_length: int, bit_adjustment: int): #Debug
     output = []
     start = 0
     consecutive_count = 0
@@ -135,7 +104,7 @@ def decoding_tx_debug(rx, threshold: int, start_duration: int, stop_duration: in
                 print('Start=', start, '  i =', i)  # debug
                 consecutive_count = 0
 
-            if (consecutive_count % 95 == 0) and (start == 1):
+            if (consecutive_count % symbol_length == 0) and (start == 1):
                 output.append(1)
                 x_values.append(i)
                 colors.append('green')
@@ -151,7 +120,7 @@ def decoding_tx_debug(rx, threshold: int, start_duration: int, stop_duration: in
 
         elif (rx[i] < threshold):
             count_zero += 1
-            if (count_zero % 88 == 0) and (start == 1):
+            if (count_zero % symbol_length == 0) and (start == 1):
                 output.append(0)
                 x_values.append(i)
                 colors.append('red')
@@ -166,7 +135,7 @@ def decoding_tx_debug(rx, threshold: int, start_duration: int, stop_duration: in
     plt.plot(rx)
     for x, color in zip(x_values, colors):
         plt.axvline(x=x, color=color, linestyle='--', linewidth=2)
-    plt.xlim(202800, 209000) # вывод начиная с самого сигнала
+    #plt.xlim(202800, 209000) # вывод начиная с самого сигнала
     plt.show()
     return output
 
@@ -177,6 +146,7 @@ def remove_ones_from_start(output):
     return i
 
 def decrypt_binary_to_ascii(binary_list):
+    #binary_list = int(binary_list)
     if len(binary_list) % 8 != 0:
         return "Длина массива должна быть кратной 8"
     
@@ -194,8 +164,10 @@ def decrypt_binary_to_ascii(binary_list):
 def decoding_rx(threshold: int, start_duration: int, stop_duration: int, samples_for_bit:int):
     start = 0
     while True:
-        rx = sdr.rx()
-        rx = abs(rx)
+        rx = []
+        for i in range(2): # Считывает секунду Rx
+            new_data = sdr.rx()
+            rx.extend(abs(new_data))
         count_ones,count_zeros = 0,0
         output = []
         for i in range(len(rx)):
@@ -277,31 +249,47 @@ def decoding_tx_debug2(threshold: int, start_duration: int, stop_duration: int, 
     plt.show()
     return output
 
+def rx_cycles_buffer(num_cycles: int,):
+    rx = []
+    for i in range(num_cycles): # Считывает num_cycles циклов Rx
+        new_data = sdr.rx()
+        rx.extend(abs(new_data))
+    return rx
 
+"Настройка SDR"
+#sdr = sdr_settings("ip:192.168.3.1", 2300e6+(2e6*2), 1000, 1e6,0,30) # type: ignore
 
-sdr = sdr_settings("ip:192.168.3.1", 2300e6+(2e6*2), 1000, 1e6,0,30) # type: ignore
+"Кодирование слова | добавление start и stop"
+bit_array = create_bit_str('rafe', 10, 5)
 
-bit_array = create_bit_str('raf')
-
-print('len bit =',len(bit_array[10:-5]))
+print('len bit_array =',len(bit_array[10:-5]))
 for i in range(len(bit_array[10:-5])):
     if ((i) % 8) == 0 and (i!=0):
         print()
     print(int(bit_array[10+i]),end=' ')
 print()
 
-
+"Создание samples"
 samples = samples_from_bits(bit_array, 20, 2**14, 2**1) 
 
-# plt.figure(3)
+# plt.figure(1)
 # plt.plot(samples)
+# plt.show()
 
-#output1 = decoding_tx_debug(samples, 7500, 1600, 1000)
+#output1 = decoding_tx_debug(samples, 7500, 200, 100, 18, -4)
+
 # plt.plot(samples) # debug
 # plt.show()
-#print(output1)
 
+# for i in range(len(output1)):
+#     if ((i) % 8) == 0 and (i!=0):
+#         print()
+#     print(int(output1[i]),end=' ')
+# print()
+
+"Передача samples циклически"
 rx = rx_sig(samples, True)
+
 # plt.figure(2)
 # for r in range(30):
 #     rx1 = sdr.rx()
@@ -319,16 +307,19 @@ rx = rx_sig(samples, True)
 #time.sleep(3)
 #sdr.tx_destroy_buffer()
 
-output = decoding_rx(1200, 190, 90, 12)
-output = decoding_tx_debug2(1200, 190, 90,-5)
+# while True:
+#     rx = rx_cycles_buffer(2)
 
-print(" ") # debug       
-print('len output =', len(output))
-print(output)       
+output = decoding_rx(1200, 195, 95, 16)
+#output = decoding_tx_debug2(1200, 190, 90,-5)
+
+# print(" ") # debug       
+# print('len output =', len(output))
+# print(output)       
 
 print(" ")
 
-print(decrypt_binary_to_ascii(output))
+print('Декодированное слово -', decrypt_binary_to_ascii(output))
 
 #out_main_graph(rx) # Можно закоментить чтобы вывести что-то другое
          
@@ -339,14 +330,3 @@ print(decrypt_binary_to_ascii(output))
 sdr.tx_destroy_buffer()
 sdr.rx_destroy_buffer()
 plt.show()
-
-for r in range(1):
-    rx = sdr.rx()
-    plt.clf()
-    plt.plot(rx.real)
-    # plt.plot(rx.imag)
-    plt.ylim(-2000, 2000)
-    plt.draw()
-    plt.xlabel("Время")
-    plt.pause(0.05)
-    time.sleep(0.0001)
