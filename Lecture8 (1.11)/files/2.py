@@ -34,8 +34,8 @@ def create_bit_str(fio: str,start_bit:int, stop_bit:int): # Функция пр�
 
     return bit_array
 
-def samples_from_bits(bit_array, symbol_length: int, amplitude_1: int, amplitude_0: int): # Функция преобразования samples в прямоугольный сигнал в зависимости от bit_array
-    sample = np.zeros(len(bit_array)*(symbol_length+5), dtype=complex) # sample массив из длинны бит*110 комплексных нулей (не 100 чтобы потом немного пустого места было)
+def samples_from_bits(bit_array, symbol_length: int, amplitude_1: int, amplitude_0: int, add_samples_for_bits: int): # Функция преобразования samples в прямоугольный сигнал в зависимости от bit_array
+    sample = np.zeros(len(bit_array)*(symbol_length+add_samples_for_bits), dtype=complex) # sample массив из длинны бит*symbol_length+add_samples_for_bits комплексных нулей 
     for i in range(len(bit_array)):
         for o in range(symbol_length):
             if bit_array[i] == 1:
@@ -161,40 +161,38 @@ def decrypt_binary_to_ascii(binary_list):
     
     return decrypted_text
 
-def decoding_rx(threshold: int, start_duration: int, stop_duration: int, samples_for_bit:int):
-    start = 0
-    while True:
-        rx = []
-        for i in range(2): # Считывает секунду Rx
-            new_data = sdr.rx()
-            rx.extend(abs(new_data))
-        count_ones,count_zeros = 0,0
-        output = []
-        for i in range(len(rx)):
-            if rx[i] > threshold:
-                count_ones += 1
-                if count_ones == start_duration:
-                    start = 1
-                    print('Start=', start,' i =', i)  # debug
-                    count_ones = 0
-
-                if count_ones == stop_duration and start == 1:
-                    start = 2
-                    print('Start=', start,' i =', i)  # debug
-                    count_ones = 0
-                
-                if count_ones == samples_for_bit and start == 1:
-                    output.append(1)
-                
-            elif rx[i] < threshold and start == 1:
+def decoding_rx(rx, threshold: int, start_duration: int, stop_duration: int, samples_for_bit:int, bit_adjustment: int):
+    count_ones,count_zeros = 0,0
+    output = []
+    for i in range(len(rx)):
+        if rx[i] > threshold: 
+            count_ones += 1
+            if count_ones == start_duration: 
+                start = 1
+                #print('Start=', start,' i =', i)  # debug
                 count_ones = 0
-                count_zeros += 1
-                if count_zeros == samples_for_bit and start == 1:
-                    output.append(0)
-        if start == 2:
-            break
 
-    return output
+            if count_ones % samples_for_bit == 0 and start == 1:
+                output.append(1)
+
+            if count_ones == stop_duration and start == 1:
+                start = 0
+                #print('Start=', start,' i =', i)  # debug
+                count_ones = 0
+                return output
+
+            
+        elif rx[i] < threshold and start == 1:
+            count_ones = 0
+            count_zeros += 1
+            if count_zeros % samples_for_bit == 0 and start == 1:
+                output.append(0)
+
+        else:
+            count_ones = 0
+            count_zeros = 0
+
+    return 0
 
 def decoding_tx_debug2(threshold: int, start_duration: int, stop_duration: int, bit_adjustment: int): #Debug
     output = []
@@ -249,7 +247,7 @@ def decoding_tx_debug2(threshold: int, start_duration: int, stop_duration: int, 
     plt.show()
     return output
 
-def rx_cycles_buffer(num_cycles: int,):
+def rx_cycles_buffer(num_cycles: int):
     rx = []
     for i in range(num_cycles): # Считывает num_cycles циклов Rx
         new_data = sdr.rx()
@@ -270,7 +268,7 @@ for i in range(len(bit_array[10:-5])):
 print()
 
 "Создание samples"
-samples = samples_from_bits(bit_array, 20, 2**14, 2**1) 
+samples = samples_from_bits(bit_array, 20, 2**14, 2**1, 5) 
 
 # plt.figure(1)
 # plt.plot(samples)
@@ -307,10 +305,15 @@ rx = rx_sig(samples, True)
 #time.sleep(3)
 #sdr.tx_destroy_buffer()
 
-# while True:
-#     rx = rx_cycles_buffer(2)
+while True:
+    "Приём Rx по 2000"
+    rx = rx_cycles_buffer(2)
+    #plt.plot(rx)
+    output = decoding_rx(rx, 1000, 190, 90, 18, -5)
+    if output != 0:
+        break
 
-output = decoding_rx(1200, 195, 95, 16)
+#output = decoding_rx(1200, 195, 95, 16)
 #output = decoding_tx_debug2(1200, 190, 90,-5)
 
 # print(" ") # debug       
