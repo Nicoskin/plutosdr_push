@@ -30,12 +30,12 @@ len bit_array = 24
 `rx = tx_sig(samples, True)`    
 
 #### Приём Rx по 2000    
-`rx = rx_cycles_buffer(2)`  
+`rx = rx_cycles_buffer(2)`    
 <img src="./photo/1.png" width="400" />    
 
 #### Получение нулей и единиц из сигнала     
-`output = decoding_rx(rx, 1000, 190, 90, 19, -11)`
-<img src="./photo/2.png" width="400" />  
+`output = decoding_rx(rx, 1000, 190, 90, 19, -11)`    
+<img src="./photo/2.png" width="400" />    
 
 #### Декодирование битовой последовательности    
 `print('Декодированное слово -', decrypt_binary_to_ascii(output))`
