@@ -26,10 +26,11 @@ def create_bit_str(fio: str,start_bit:int, stop_bit:int): # Функция пр�
         bit_array.extend([int(bit) for bit in bits])
 
     bit_start = np.ones(start_bit) 
+    bit_zero = np.zeros(1)
     bit_stop = np.ones(stop_bit)
     
     bit_array_list = list(bit_array)
-    bit_array_list = list(bit_start) + bit_array_list + list(bit_stop) 
+    bit_array_list = list(bit_start) + bit_array_list + list(bit_zero) + list(bit_stop) 
     bit_array = np.array(bit_array_list)
 
     return bit_array
@@ -83,7 +84,7 @@ def decoding_tx(rx, threshold: int, start_duration: int, stop_duration: int): # 
     
     return output
 
-def rx_sig(samples, tx_cycle: bool): # Функция передает samples
+def tx_sig(samples, tx_cycle: bool): # Функция передает samples
     sdr.tx_cyclic_buffer = tx_cycle
     sdr.tx(samples)
 
@@ -139,11 +140,27 @@ def decoding_tx_debug(rx, threshold: int, start_duration: int, stop_duration: in
     plt.show()
     return output
 
-def remove_ones_from_start(output):
-    i = 0
-    while i < len(output) and output[i] == 1:
-        i += 1
-    return i
+def remove_ones_from_start(arr):
+    # Перебираем элементы массива
+    for i in range(len(arr)):
+        # Если найден первый ноль или элемент не равен 1
+        if arr[i] == 0 or arr[i] != 1:
+            # Возвращаем подмассив, начиная с текущей позиции
+            return arr[i:]
+    
+    # Если весь массив состоит из единиц, возвращаем пустой массив
+    return []
+
+def remove_ones_from_stop(arr):
+    # Перебираем элементы массива с конца
+    for i in range(len(arr)-1, -1, -1):
+        # Если найден первый ноль
+        if arr[i] == 0:
+            # Удаляем его и все последующие элементы
+            return arr[:i]
+    
+    # Если в массиве нет нулей, возвращаем пустой массив
+    return []
 
 def decrypt_binary_to_ascii(binary_list):
     #binary_list = int(binary_list)
@@ -164,8 +181,10 @@ def decrypt_binary_to_ascii(binary_list):
 def decoding_rx(rx, threshold: int, start_duration: int, stop_duration: int, samples_for_bit:int, bit_adjustment: int):
     count_ones,count_zeros = 0,0
     output = []
+    start = 0
     for i in range(len(rx)):
         if rx[i] > threshold: 
+            count_zeros = 0
             count_ones += 1
             if count_ones == start_duration: 
                 start = 1
@@ -179,6 +198,8 @@ def decoding_rx(rx, threshold: int, start_duration: int, stop_duration: int, sam
                 start = 0
                 #print('Start=', start,' i =', i)  # debug
                 count_ones = 0
+                output = remove_ones_from_start(output)
+                output = remove_ones_from_stop(output)
                 return output
 
             
@@ -255,10 +276,10 @@ def rx_cycles_buffer(num_cycles: int):
     return rx
 
 "Настройка SDR"
-#sdr = sdr_settings("ip:192.168.3.1", 2300e6+(2e6*2), 1000, 1e6,0,30) # type: ignore
+#sdr = sdr_settings("ip:192.168.2.1", 2300e6+(2e6*2), 1000, 1e6,0,30) # type: ignore
 
 "Кодирование слова | добавление start и stop"
-bit_array = create_bit_str('rafe', 10, 5)
+bit_array = create_bit_str('rea', 10, 5)
 
 print('len bit_array =',len(bit_array[10:-5]))
 for i in range(len(bit_array[10:-5])):
@@ -286,7 +307,7 @@ samples = samples_from_bits(bit_array, 20, 2**14, 2**1, 5)
 # print()
 
 "Передача samples циклически"
-rx = rx_sig(samples, True)
+rx = tx_sig(samples, True)
 
 # plt.figure(2)
 # for r in range(30):
@@ -308,10 +329,21 @@ rx = rx_sig(samples, True)
 while True:
     "Приём Rx по 2000"
     rx = rx_cycles_buffer(2)
-    #plt.plot(rx)
-    output = decoding_rx(rx, 1000, 190, 90, 18, -5)
+    plt.plot(rx)
+    output = decoding_rx(rx, 1000, 190, 90, 19, -11)
+    output = output[:-1]  # type: ignore
+    print(len(output)) # type: ignore
+    #print(output)
+    for i in range(len(output)): # type: ignore
+        if ((i) % 8) == 0 and (i!=0):
+            print()
+        print(int(output[i]),end=' ') # type: ignore
+
+    # print('Декодированное слово -', decrypt_binary_to_ascii(output))
+    # output = []
+    # time.sleep(0.1)
     if output != 0:
-        break
+       break
 
 #output = decoding_rx(1200, 195, 95, 16)
 #output = decoding_tx_debug2(1200, 190, 90,-5)
