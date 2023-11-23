@@ -1,8 +1,8 @@
 # Задание на практику ![](https://img.shields.io/badge/Done-green.svg)
 
 # Задание
-1 Передать и получить АМ сигнал
-2 Передать и получить QPSK модулированный сигнал
+1. Передать и получить АМ сигнал  
+2. Передать и получить QPSK модулированный сигнал
 
 
 # Выполнение
@@ -24,17 +24,17 @@ np.abs(yf)
 ### Задание 2
 Использовал свою библиотеку для SDR (версии 0.0.6)
 
-Первая попытка
-<img src="./photo/my_qpsk_rx1_plot.png" width="600" /> 
-<img src="./photo/my_qpsk_rx1_scatter.png" width="400" /> 
+Первая попытка  
+<img src="./photo/my_qpsk_rx1_plot.png" width="600" />
+<img src="./photo/my_qpsk_rx1_scatter.png" width="357" />       
 
-Изменил несущую частоту + разворот на нужный угол
-<img src="./photo/my_qpsk_rx2_plot.png" width="600" /> 
-<img src="./photo/my_qpsk_rx2_scatter.png" width="400" /> 
+Изменил несущую частоту + разворот на нужный угол  
+<img src="./photo/my_qpsk_rx2_plot.png" width="600" />
+<img src="./photo/my_qpsk_rx2_scatter.png" width="357" />     
 
-Без функции для разворота сигнала по синхронизации 
-<img src="./photo/my_qpsk_rx3_plot.png" width="600" /> 
-<img src="./photo/my_qpsk_rx3_scatter.png" width="400" /> 
+Без функции для разворота сигнала по синхронизации   
+<img src="./photo/my_qpsk_rx3_plot.png" width="600" />
+<img src="./photo/my_qpsk_rx3_scatter.png" width="357" />     
 
 
 ### Выполнено дома
