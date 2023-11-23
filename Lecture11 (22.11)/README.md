@@ -35,3 +35,19 @@ np.abs(yf)
 Без функции для разворота сигнала по синхронизации 
 <img src="./photo/my_qpsk_rx3_plot.png" width="600" /> 
 <img src="./photo/my_qpsk_rx3_scatter.png" width="400" /> 
+
+
+### Выполнено дома
+Используя свой файл `my_qpsk_rx2.npy` с сырым полученным сигналом rx,    
+я отбросил все лишние символы и оставил чистый сигнал
+
+```py
+symbol_length = 10
+symbols = samples.reshape(-1, symbol_length)
+extracted_symbols = symbols[:, 0]
+```
+
+<img src="./photo/home.png" width="700" /> 
+
+На нижнем графике исходный массив который передавался(90 бит)   
+На верхнем обработанный сигнал rx в котором остались одиночные символы(45 символов)
