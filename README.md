@@ -17,11 +17,12 @@
 - [x] [Практика 7](./Lecture07%20(25.10))
 - [x] [Практика 8](./Lecture08%20(01.11))
 - [x] [Задания для стипендии](./Задания%20для%20стипендии(8.11))
-- [x] [Практика 10](./Lecture10%20(15.11))
+- [x] [Практика 10](./Lecture10%20(15.11))  
 - [x] [Практика 11](./Lecture11%20(22.11))
 - [x] [Практика 12](./Lecture12%20(29.11))
 - [x] [Практика 13](./Lecture13%20(06.12))
 - [x] [Практика 14](./Lecture14%20(13.12))
+- [x] [Практика 15](./Lecture15%20(21.12))
 # 
 
 ### Ссылки на лекции
@@ -42,6 +43,7 @@
 + [15. Дискретная АМ, формирование символов в формирующем фильтре, прием сигналов на согласованный фильтр.](https://humble-ballcap-e09.notion.site/15--ab3f176a821848478cb11affbfe4fe0b)
 + [16. Частотная синхронизация, грубая и точная](https://humble-ballcap-e09.notion.site/16-50a1614990ac456bb72154d603bb8654)
 + [17. Частотная синхронизация на основе DPLL](https://humble-ballcap-e09.notion.site/17-DPLL-4e7416ba5a964bc48d3ec5259d0a8a61)
++ [18. GNU Radio. Построение радио-приёмника](https://humble-ballcap-e09.notion.site/18-GNU-Radio-b36014a54fa2449ea6eb13c7f0721acc)
 
 [//]: <> (https://img.shields.io/badge/In%20progress-grey.svg)
 [//]: <> (https://img.shields.io/badge/Done-green.svg)
