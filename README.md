@@ -23,6 +23,8 @@
 - [x] [Практика 13](./Lecture13%20(06.12))
 - [x] [Практика 14](./Lecture14%20(13.12))
 - [x] [Практика 15](./Lecture15%20(21.12))
+- [x] [Практика 16](./Lecture16%20(27.12))
+- [x] [Практика 17](./Lecture17%20(08.02))
 # 
 
 ### Ссылки на лекции
@@ -37,13 +39,15 @@
 + [9. Амплитудная модуляция](https://humble-ballcap-e09.notion.site/9-e47a36000b3944be8c93d32561685ae1)
 + [10. Изучение свойств АМ-сигналов с помощью моделирования в Python/Spyder](https://humble-ballcap-e09.notion.site/10-Python-Spyder-6db5b4e2bbc74e098af7297b98508b63)
 + [11. Передача/прием sin() сигнала. Реализация АМ модуляции. PlutoSDR](https://humble-ballcap-e09.notion.site/11-sin-PlutoSDR-33d96c13fe9142c3bdceb2ede48f7a50)
-+ [12. Комплексное НЧ представление сигналов. Цифровая КАМ модуляция.](https://humble-ballcap-e09.notion.site/12-83c5c0afd4d6469d8d40becd87874dc8)
++ [12. Комплексное НЧ представление сигналов. Цифровая КАМ модуляция](https://humble-ballcap-e09.notion.site/12-83c5c0afd4d6469d8d40becd87874dc8)
 + [13. Модуляции QPSK, QAM. Раздельный приём и передача на SDR](https://humble-ballcap-e09.notion.site/13-QPSK-QAM-SDR-6928d03094d34fc895a4ab49dfed48ec)
-+ [14. Квадратурная IQ модуляция. Общая схема формирования и приема сигналов с дискретной модуляцией.](https://humble-ballcap-e09.notion.site/14-IQ-f05a7383ce384e51a13de2b04708bbc8)
-+ [15. Дискретная АМ, формирование символов в формирующем фильтре, прием сигналов на согласованный фильтр.](https://humble-ballcap-e09.notion.site/15--ab3f176a821848478cb11affbfe4fe0b)
++ [14. Квадратурная IQ модуляция. Общая схема формирования и приема сигналов с дискретной модуляцией](https://humble-ballcap-e09.notion.site/14-IQ-f05a7383ce384e51a13de2b04708bbc8)
++ [15. Дискретная АМ, формирование символов в формирующем фильтре, прием сигналов на согласованный фильтр](https://humble-ballcap-e09.notion.site/15--ab3f176a821848478cb11affbfe4fe0b)
 + [16. Частотная синхронизация, грубая и точная](https://humble-ballcap-e09.notion.site/16-50a1614990ac456bb72154d603bb8654)
 + [17. Частотная синхронизация на основе DPLL](https://humble-ballcap-e09.notion.site/17-DPLL-4e7416ba5a964bc48d3ec5259d0a8a61)
 + [18. GNU Radio. Построение радио-приёмника](https://humble-ballcap-e09.notion.site/18-GNU-Radio-b36014a54fa2449ea6eb13c7f0721acc)
++ [19. Структурирование проектов. “Стандарты” для Python](https://humble-ballcap-e09.notion.site/19-Python-2d5d1c2f6b724aceb39c4bd3197ae2a0)
++ [20. Прием сигналов на согласованный фильтр, глазковая диаграмма, символьная синхронизация](https://humble-ballcap-e09.notion.site/20-2fa75e690be94b7a925dc01aa2a9b196)
 
 [//]: <> (https://img.shields.io/badge/In%20progress-grey.svg)
 [//]: <> (https://img.shields.io/badge/Done-green.svg)
