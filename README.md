@@ -26,6 +26,8 @@
 - [x] [Практика 16](./Lecture16%20(27.12))
 - [x] [Практика 17](./Lecture17%20(08.02))
 - [x] [Практика 18](./Lecture18%20(15.02))
+- [x] [Практика 19](./Lecture19%20(22.02))
+- [x] [Практика 20](./Lecture20%20(29.02))
 # 
 
 ### Ссылки на лекции
@@ -49,6 +51,9 @@
 + [18. GNU Radio. Построение радио-приёмника](https://humble-ballcap-e09.notion.site/18-GNU-Radio-b36014a54fa2449ea6eb13c7f0721acc)
 + [19. Структурирование проектов. “Стандарты” для Python](https://humble-ballcap-e09.notion.site/19-Python-2d5d1c2f6b724aceb39c4bd3197ae2a0)
 + [20. Прием сигналов на согласованный фильтр, глазковая диаграмма, символьная синхронизация](https://humble-ballcap-e09.notion.site/20-2fa75e690be94b7a925dc01aa2a9b196)
++ [21. Введение в OFDM. Понятие поднесущей. Частотный разнос между поднесущими](https://humble-ballcap-e09.notion.site/21-OFDM-b0b32d9ac9904f1b84c0daebe66ff96e)
++ [22. Формирование и прием OFDM при помощи ДПФ. Защитный интервал](https://humble-ballcap-e09.notion.site/22-OFDM-950240004cf940bc82bfdd60050c7064)
++ [23. Прием OFDM. Символьная синхронизация](https://humble-ballcap-e09.notion.site/23-OFDM-8e822d33be364e2fae65fcba149a3ba7)
 
 [//]: <> (https://img.shields.io/badge/In%20progress-grey.svg)
 [//]: <> (https://img.shields.io/badge/Done-green.svg)
