@@ -29,6 +29,8 @@
 - [x] [Практика 19](./Lecture19%20(22.02))
 - [x] [Практика 20](./Lecture20%20(29.02))
 - [x] [Практика 21](./Lecture21%20(07.03))
+- [x] [Практика 22](./Lecture22%20(13.03))
+- [x] [Практика 23](./Lecture23%20(21.03))
 # 
 
 ### Ссылки на лекции
@@ -55,6 +57,7 @@
 + [21. Введение в OFDM. Понятие поднесущей. Частотный разнос между поднесущими](https://humble-ballcap-e09.notion.site/21-OFDM-b0b32d9ac9904f1b84c0daebe66ff96e)
 + [22. Формирование и прием OFDM при помощи ДПФ. Защитный интервал](https://humble-ballcap-e09.notion.site/22-OFDM-950240004cf940bc82bfdd60050c7064)
 + [23. Прием OFDM. Символьная синхронизация](https://humble-ballcap-e09.notion.site/23-OFDM-8e822d33be364e2fae65fcba149a3ba7)
++ [24. Прием OFDM. Символьная синхронизация, частотная синхронизация, оценка канала и коррекция](https://humble-ballcap-e09.notion.site/24-OFDM-54fac543e0eb4904819388f7ccdd72a7)
 
 [//]: <> (https://img.shields.io/badge/In%20progress-grey.svg)
 [//]: <> (https://img.shields.io/badge/Done-green.svg)
