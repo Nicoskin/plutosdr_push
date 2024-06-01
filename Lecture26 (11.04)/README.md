@@ -8,9 +8,14 @@
 ### Задание 1
 
 Установка ZeroMQ 
+
 Сборка srsRAN 4G
+
 Запуск end-to-end LTE сети на одном хосте
+
 Создание Network Namespace
+
 Запуск srsRAN 4G
+
 
 Тест прошёл успешно
